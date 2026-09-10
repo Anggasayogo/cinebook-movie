@@ -13,13 +13,10 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(movie: FavoriteMovieEntity)
-
     @Delete
     suspend fun deleteFavorite(movie: FavoriteMovieEntity)
-
     @Query("SELECT * FROM favorite_movies")
     fun getAllFavorites(): Flow<List<FavoriteMovieEntity>>
-
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_movies WHERE id = :movieId)")
     fun isFavorite(movieId: Int): Flow<Boolean>
 }

@@ -1,5 +1,6 @@
 package com.cinebookmovie.presentation.detail
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -33,11 +35,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.cinebookmovie.data.local.entity.FavoriteMovieEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +55,7 @@ fun MovieDetailScreen(
     }
     // 2. Observe State dari ViewModel
     val detailMovieState by viewModel.uiState.collectAsStateWithLifecycle()
-
+    val isFavorite by viewModel.isFavorite.collectAsStateWithLifecycle()
 
     val lazyListState = rememberLazyListState()
     val headerHeight = 300.dp
@@ -162,7 +166,22 @@ fun MovieDetailScreen(
             )
         }
         IconButton(
-            onClick = {},
+            onClick = {
+                val currentState = detailMovieState
+                Log.d("Hello",currentState.toString())
+                if (currentState is DetailUiState.Success) {
+                    val movie = currentState.movie
+                    Log.d("Hello",movie.toString())
+                    val favoriteEntity = FavoriteMovieEntity(
+                        id = movie.id,
+                        title = movie.title ?: "",
+                        posterPath = movie.poster ?: "",
+                        overview = movie.overview ?: "",
+                        voteAverage = movie.voteAverage ?: 0.0
+                    )
+                    viewModel.toggleFavorite(favoriteEntity)
+                }
+            },
             modifier = Modifier
                 .statusBarsPadding()
                 .padding(10.dp)
@@ -172,10 +191,19 @@ fun MovieDetailScreen(
                 )
         ) {
             Icon(
-                imageVector = Icons.Default.AddCircleOutline,
-                contentDescription = "Back",
-                tint = Color.White
+                imageVector = Icons.Default.Favorite,
+                contentDescription = "Favorite",
+                tint = if (isFavorite) Color.Red else Color.White
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun MovieDetailScreenPreview() {
+    MovieDetailScreen(
+        onBackClick = {},
+        movieId = 0
+    )
 }
