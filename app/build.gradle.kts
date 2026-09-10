@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.compose.material.icons.extended)
+    // Room Database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
     // Networking (Retrofit & OkHttp)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)

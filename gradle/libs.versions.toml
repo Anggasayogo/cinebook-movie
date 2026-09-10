@@ -18,6 +18,7 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 coil = "2.7.0"
 chucker = "4.0.0"
+room = "2.6.1"
 
 # Testing
 junit = "4.13.2"
@@ -36,6 +37,11 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 
 # Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+# Room Database
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 # Chucker Network Inspector
 chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
