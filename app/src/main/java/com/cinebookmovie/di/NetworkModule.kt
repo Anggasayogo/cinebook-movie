@@ -1,5 +1,6 @@
 package com.cinebookmovie.di
 
+import com.cinebookmovie.BuildConfig
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.cinebookmovie.data.remote.TmdbApiService
@@ -20,7 +21,6 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private const val BASE_URL = "https://api.themoviedb.org/3/"
-    private const val BEARER_TOKEN = ""
 
     @Provides
     @Singleton
@@ -29,7 +29,7 @@ object NetworkModule {
     ): OkHttpClient {
         val authInterceptor = Interceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer $BEARER_TOKEN")
+                .addHeader("Authorization", BuildConfig.TMDB_TOKEN)
                 .addHeader("accept", "application/json")
                 .build()
             chain.proceed(request)
