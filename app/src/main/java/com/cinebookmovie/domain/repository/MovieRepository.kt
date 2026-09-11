@@ -12,9 +12,7 @@ interface MovieRepository {
     suspend fun getNowPlayingMovies(): List<NowPlayingMovie>
     suspend fun getTopRatedMovies(): List<TopRatedMovie>
     suspend fun getDetailMovies(movieId: Int): DetailMovie
-
     fun getFavoriteMovies(): Flow<List<FavoriteMovieEntity>>
-    // Tambahkan 2 fungsi ini
     suspend fun insertFavoriteMovie(movie: FavoriteMovieEntity)
     suspend fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
     fun isFavorite(movieId: Int): Flow<Boolean>

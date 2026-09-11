@@ -13,20 +13,37 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+sealed interface PopularMovieUiState {
+    data object Loading : PopularMovieUiState
+    data class Success(val popularMovie: List<Movie>) : PopularMovieUiState
+    data class Error(val message: String) : PopularMovieUiState
+}
+
+sealed interface NowPlayMovieUiState {
+    data object Loading : NowPlayMovieUiState
+    data class Success(val nowPlayMovie: List<NowPlayingMovie>) : NowPlayMovieUiState
+    data class Error(val message: String) : NowPlayMovieUiState
+}
+
+sealed interface TopRatedMovieUiState {
+    data object Loading : TopRatedMovieUiState
+    data class Success(val topRatedMovie: List<TopRatedMovie>) : TopRatedMovieUiState
+    data class Error(val message: String) : TopRatedMovieUiState
+}
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: MovieRepository) : ViewModel() {
     // 1. State Flow for Popular Movies
-    private val _popularMovies = MutableStateFlow<List<Movie>>(emptyList())
-    val popularMovies: StateFlow<List<Movie>> = _popularMovies.asStateFlow()
+    private val _popularMovies = MutableStateFlow<PopularMovieUiState>(PopularMovieUiState.Loading)
+    val popularMovies: StateFlow<PopularMovieUiState> = _popularMovies.asStateFlow()
 
     // 1. State Flow for Popular Movies
-    private val _nowPlayingMovies = MutableStateFlow<List<NowPlayingMovie>>(emptyList())
-    val nowPlayingMovies: StateFlow<List<NowPlayingMovie>> = _nowPlayingMovies.asStateFlow()
+    private val _nowPlayingMovies = MutableStateFlow<NowPlayMovieUiState>(NowPlayMovieUiState.Loading)
+    val nowPlayingMovies: StateFlow<NowPlayMovieUiState> = _nowPlayingMovies.asStateFlow()
 
 
     // 2. State Flow for Popular TopRatedMovie
-    private val _topRatedMovies = MutableStateFlow<List<TopRatedMovie>>(emptyList())
-    val topRatedMovies: StateFlow<List<TopRatedMovie>> = _topRatedMovies.asStateFlow()
+    private val _topRatedMovies = MutableStateFlow<TopRatedMovieUiState>(TopRatedMovieUiState.Loading)
+    val topRatedMovies: StateFlow<TopRatedMovieUiState> = _topRatedMovies.asStateFlow()
 
 
     // function automaticaly exceute when ui load
@@ -38,8 +55,10 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
 
     private fun getPopularMovies() {
         viewModelScope.launch {
+            _popularMovies.value = PopularMovieUiState.Loading
             try {
-                _popularMovies.value = repository.getPopularMovies()
+                val movieList = repository.getPopularMovies()
+                _popularMovies.value = PopularMovieUiState.Success(movieList)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -48,8 +67,10 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
 
     private fun getNowPlayingMovies() {
         viewModelScope.launch {
+            _nowPlayingMovies.value = NowPlayMovieUiState.Loading
             try {
-                _nowPlayingMovies.value = repository.getNowPlayingMovies()
+                val nowPlayMov = repository.getNowPlayingMovies()
+                _nowPlayingMovies.value = NowPlayMovieUiState.Success(nowPlayMov)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -58,8 +79,10 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
 
     private fun getTopRatedMovies() {
         viewModelScope.launch {
+            _topRatedMovies.value = TopRatedMovieUiState.Loading
             try {
-                _topRatedMovies.value = repository.getTopRatedMovies();
+                val topRatedMov = repository.getTopRatedMovies()
+                _topRatedMovies.value = TopRatedMovieUiState.Success(topRatedMov)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
