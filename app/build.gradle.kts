@@ -70,6 +70,7 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     // Image Loading (Coil)
     implementation(libs.coil.compose)
+    implementation(libs.shimmer.compose)
     // Chucker Inspector
     debugImplementation(libs.chucker.library)
     releaseImplementation(libs.chucker.library.noop)

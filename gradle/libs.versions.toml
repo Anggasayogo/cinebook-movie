@@ -19,6 +19,7 @@ okhttp = "4.12.0"
 coil = "2.7.0"
 chucker = "4.0.0"
 room = "2.7.0"
+shimmer = "1.5.0"
 
 # Testing
 junit = "4.13.2"
@@ -37,6 +38,7 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 
 # Image Loading
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+shimmer-compose = { group = "com.valentinilk.shimmer", name = "compose-shimmer", version.ref = "shimmer" }
 
 # Room Database
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

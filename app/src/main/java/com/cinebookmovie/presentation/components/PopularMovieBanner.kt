@@ -33,16 +33,6 @@ fun PopularMoviesBannerSection(
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        Text(
-            text = "Popular Movie",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(horizontal = 16.dp)
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
         // Banner Scroll Horizontal
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
