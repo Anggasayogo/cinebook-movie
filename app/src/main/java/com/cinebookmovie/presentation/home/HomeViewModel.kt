@@ -92,6 +92,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                 _popularMovies.value = PopularMovieUiState.Success(movieList)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _popularMovies.value = PopularMovieUiState.Error(e.message ?: "Gagal memperbarui data")
             }
         }
     }
@@ -104,6 +105,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                 _nowPlayingMovies.value = NowPlayMovieUiState.Success(nowPlayMov)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _nowPlayingMovies.value = NowPlayMovieUiState.Error(e.message ?: "Gagal memperbarui data")
             }
         }
     }
@@ -116,6 +118,7 @@ class HomeViewModel @Inject constructor(private val repository: MovieRepository)
                 _topRatedMovies.value = TopRatedMovieUiState.Success(topRatedMov)
             } catch (e: Exception) {
                 e.printStackTrace()
+                _topRatedMovies.value = TopRatedMovieUiState.Error(e.message ?: "Gagal memperbarui data")
             }
         }
     }
