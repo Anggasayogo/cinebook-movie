@@ -12,11 +12,22 @@ import com.cinebookmovie.presentation.detail.MovieDetailScreen
 import com.cinebookmovie.presentation.favorite.FavoriteScreen
 import com.cinebookmovie.presentation.home.HomeScreen
 import com.cinebookmovie.presentation.search.SearchScreen
+import com.cinebookmovie.presentation.splash.SplashScreen
 
 @Composable
 fun SetupNavGraph(navController: NavHostController, modifier: Modifier = Modifier) {
-    NavHost(navController = navController,startDestination = Screen.Home.route,modifier = modifier) {
-        // 1. Home Screen
+    NavHost(navController = navController,startDestination = Screen.Splash.route,modifier = modifier) {
+        composable(route = Screen.Splash.route) {
+            SplashScreen(
+                onNextMove = { ->
+                    navController.navigate(Screen.Home.route){
+                        popUpTo(Screen.Splash.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
         composable(route = Screen.Home.route) {
             HomeScreen(
                 onMovieClick = { movieId ->
@@ -30,8 +41,6 @@ fun SetupNavGraph(navController: NavHostController, modifier: Modifier = Modifie
                 }
             )
         }
-
-        // 2. Detail Screen (Menerima parameter ID)
         composable(
             route = Screen.Detail.route,
             arguments = listOf(
@@ -46,8 +55,6 @@ fun SetupNavGraph(navController: NavHostController, modifier: Modifier = Modifie
                 }
             )
         }
-
-        // 3. Search Screen
         composable(route = Screen.Search.route) {
             SearchScreen(
                 onBackClick = {
@@ -55,8 +62,6 @@ fun SetupNavGraph(navController: NavHostController, modifier: Modifier = Modifie
                 }
             )
         }
-
-        // 4. Favorite Screen
         composable(route = Screen.Favorite.route) {
             FavoriteScreen(
                 onMovieClick = { movieId ->
